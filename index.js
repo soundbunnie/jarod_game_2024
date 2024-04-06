@@ -391,9 +391,9 @@ let talkToOrAboutX = (preposition, x) => {
       const availableTopics = topics.filter(topic => topicIsAvailable(character, topic));
 
       if (availableTopics.length) {
-        println(`What would you like to discuss?`);
+        // println(`What would you like to discuss?`);
         availableTopics.forEach(topic => println(`${bullet} ${topic.option ? topic.option : topic.keyword.toUpperCase()}`));
-        println(`${bullet} NOTHING`);
+        println(`${bullet} **NEVERMIND**`);
       } else {
         // if character isn't handling onTalk, let the player know they are out of topics
         if (!character.onTalk) {
@@ -411,12 +411,12 @@ let talkToOrAboutX = (preposition, x) => {
 
   if (preposition === 'to') {
     if (!getCharacter(x)) {
-      println(`There is no one here by that name.`);
+      println(`Who?`);
       return;
     }
 
     if (!getCharacter(getName(x), getCharactersInRoom(room.id))) {
-      println(`There is no one here by that name.`);
+      println(`Who?`);
       return;
     }
 
@@ -664,6 +664,7 @@ let commands = [
     inventory: inv,
     look,
     l: look, // shortcut for look
+    examine: look,
     go,
     n,
     s,
@@ -692,6 +693,7 @@ let commands = [
   // one argument (e.g. "go north", "take book")
   {
     look: lookThusly,
+    examine: lookThusly,
     go: goDir,
     take: takeItem,
     get: takeItem,
@@ -701,6 +703,7 @@ let commands = [
     load: x => load(x),
     restore: x => load(x),
     x: x => lookAt([null, x]), // IF standard shortcut for look at
+    examine: x => lookAt([null, x]),
     t: x => talkToOrAboutX('to', x), // IF standard shortcut for talk
     export: exportSave,
     import: importSave, // (ignores the argument)
@@ -819,6 +822,8 @@ let println = (line, className) => {
 
   const output = document.querySelector('#output');
   const newLine = document.createElement('div');
+
+  var str = str.replace(/\\s+g/g, "‏‏‎ ‎");
 
   if (className) {
     newLine.classList.add(className);
@@ -1044,7 +1049,7 @@ let getKeywordFromTopic = (topic) => {
 // conversation, string -> boolean
 let conversationIncludesTopic = (conversation, keyword) => {
   // NOTHING is always an option
-  if (keyword === 'nothing') {
+  if (keyword === 'nevermind') {
     return true;
   }
 

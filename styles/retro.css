@@ -3,29 +3,17 @@
   src: url('../fonts/font.ttf');
 }
 
-:root {
-  --crt-red: rgb(218, 49, 49);
-  --crt-green: rgb(112, 159, 115);
-  --crt-blue: rgb(40, 129, 206);
-}
-
 body {
-  color: #000080;
+  color: #ff8012;
   font-size: 2.2vh;
   font-family: 'Apple II';
   line-height: 4vh;
   /* screen glow */
-  /*background-image: radial-gradient(
+  background-image: radial-gradient(
     #1f0b00, black 120%
-  );*/
-  /* text glow */
-  text-shadow: #ffffff 1px 0 10px;
-  background: repeating-linear-gradient(
-    var(--crt-red) 0px,
-    var(--crt-green) 2px,
-    var(--crt-blue) 4px
   );
-  
+  /* text glow */
+  text-shadow: 0 0 5px rgba(255, 78, 0, 0.6);
 }
 
 /* scanlines */
@@ -36,7 +24,7 @@ body::after {
   left: 0;
   width: 100vw;
   height: 100vh;
-  /*background: repeating-linear-gradient(rgba(0, 8, 128, 0.2) 0.5vh, rgba(0, 0, 0, 0.05) 0.8vh);*/
+  background: repeating-linear-gradient(rgba(255, 78, 0, 0.03) 0.5vh, rgba(0, 0, 0, 0.05) 0.8vh);
   z-index: -1;
 }
 
@@ -59,6 +47,7 @@ body::after {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+  line-height: 20.67px;
 }
 
 #output {
@@ -70,7 +59,6 @@ body::after {
 }
 
 .input {
-  caret-color: blue;
   display: flex;
 }
 
@@ -78,30 +66,17 @@ a {
   color: orange;
 }
 
-.cursor {
-  display: inline-block;
-  animation: cursor 500ms infinite normal;
-}
-
 #input {
   height: 4vh;
   width: 98.5vh;
-  color: #000080;
+  color: orange;
   background: transparent;
   font-size: 2vh;
   font-family: "Apple II";
   border: none;
-  position: relative;
+  position: sticky;
   bottom: 0.175vh;
   margin-left: .5vw;
-}
-
-#input:after{
-	content: "testest";
-	animation: cursor 1s infinite;
-	animation-timing-function: step-end;
-	margin-left: 1px;
-	line-height: 1rem;
 }
 
 span {
@@ -112,20 +87,10 @@ span {
   outline: none;
 }
 
-
 @keyframes blink {
   0% {background: orange;}
   49% {background: orange;}
   60% {background: transparent;}
   99% {background: transparent;}
   100% {background: orange;}
-}
-
-@keyframes cursor {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
