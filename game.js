@@ -128,7 +128,7 @@ const gameDisk = () => ({
   ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ The bar sat inside a strip mall, between an old abandoned warehouse and a Chuck E. Cheese that I wasn’t sure was even still operational. I stood behind my car, gazing up at the cheap neon sign that indicated that this place of business actually served people. Another larger sign sat above it, with the words “The Axe N’ Cleaver” in cheap, red, Times New Roman. Fitting name, as this is the very place that Justice would meet its end. 
 
 You are standing OUTSIDE.
-You can see some SIGNS, and the DOOR.
+You can see some SIGNS, and the DOOR, which is to your north.
 `,
 
   onLook: () => {
@@ -159,7 +159,7 @@ You can see some SIGNS, and the DOOR.
 
   exits: [
     {
-      dir: ['inside the bar', 'inside', 'the bar'], id: 'inside-bar',
+      dir: ['inside the bar', 'inside', 'the bar', 'north', 'door'], id: 'inside-bar',
     }
   ]
 
@@ -182,6 +182,35 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
     onEnter: () => {
       isOutside = false;
     },
+
+    exits: [
+      {
+        dir: ['outside the bar', 'outside', 'south'], id: 'outside'
+      },
+      {
+        dir: ['bar', 'the bar', 'north'], id: 'bar',
+      },
+      {
+        dir: ['east'], id: 'bathrooms',
+      },
+    ]
+  },
+
+  {
+    id: 'bar',
+    desc: `I approached the bar, gathering a closer look at the single patron. This guy was huge, and could
+    drink to match his size. He sat with an array of empty glasses around him. A deck of CARDS lay next to his
+    left hand, which was resting on the bar with the rest of his massive torso. His skin was bright red, and her
+    nails were sharp, long, and black. His only acknowledgement was the perk of an eyebrow and a grunt.
+    You are standing by the BAR.
+    The floor of the AXE N’ CLEAVER is behind you to your SOUTH.
+    You can see a deck of CARDS, a drink MENU, and a MAN sitting at the bar`,
+
+    exits: [
+      {
+        dir: ['south', 'back'], id: 'inside-bar'
+      }
+    ],
 
     items: [
       {
@@ -224,15 +253,24 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
       }
     ],
 
+  },
+
+  { 
+    id: 'bathrooms',
+    name: `
+    ==========
+    BATHROOMS
+    ==========`,
+    desc: `I swung the door open, and it slammed shut behind me, making it too dark to see, well, anything.
+    I feel like I am likely to be eaten by a grue, for what it’s worth.
+    You are standing inside the BATHROOM.
+    There is an exit to your WEST.`,
     exits: [
       {
-        dir: ['outside the bar', 'outside'], id: 'outside'
-      },
-      {
-        dir: ['bar', 'the bar', 'north'], id: 'bar'
-      },
+        dir: 'west', id: 'inside-bar'
+      }
     ]
-  },],
+  }],
 
   inventory: [
     {
@@ -259,7 +297,7 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
     },
     
     {
-      name: ['Velo-Dog Pocket Pistol', 'Velo-Dog', 'Velo', 'Pistol', 'Pocket Pistol','Gun'],
+      name: ['Velo-Dog™ Pocket Pistol', 'Velo-Dog', 'Velo', 'Pistol', 'Pocket Pistol','Gun'],
       desc: `A standard issue poodle plinker, perfect for blasting those pesky ankle-biters on your morning bike commute. It might have come in handy, if I hadn’t missed my monthly U-Holster subscription. Now it’s just a paper weight.
       `,
       onUse: () =>{
@@ -279,7 +317,7 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
   characters: [
     {
       name: 'man',
-      roomId: 'inside-bar',
+      roomId: 'bar',
       desc: `A hulking visage of a man sat lazily at the counter in front of me. His face was obscured in
       shadow, his clothes illuminated by the radiant orange glow from the bar. He was hunched over the bar,
       wearing a cream-coloured daysuit, idly sipping away at the drinks. A comfortable line of empty glasses lay
