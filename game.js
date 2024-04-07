@@ -4,6 +4,51 @@ var isOutside = false;
 
 var cigarettesSmoked = 0;
 
+var cardsInspected = false;
+
+/* TEMPORARY SOLUTION : REPLACE */
+var topicsBadgeUnlocked = false;
+
+var topicsCarpetUnlocked = false;
+
+var topicsTarotUnlocked = false;
+
+var felixTopicsBadge =
+  {
+  option: `Show him my **BADGE**`,
+  line: `I thumbed through my coat, and produced my police badge. He scoffed in my direction, his voice
+  rumbling from his chest. “Oh, I know who you are, DETECTIVE. I don’t feel like conversing with your ilk.
+  Leave me be.” Tough crowd.`,
+  }
+
+var felixTopicsTarot = 
+{
+  option: `Ask about the **TAROT** cards`,
+  line: `“So, you’re into divination?” Finally, something piqued his interest, his hand slowly coiling over
+  the cards, eyes slowly gazing over my form. He replied, “ Something to pass the time, DETECTIVE. “ His
+  eyes slowly drifted to the cards, lifting them from the table, beginning to shuffle, remaining silent for
+  some time. “. . .If you wish to do business with me, I must verify you are the person you *CLAIM* to be.”
+  Before I could even say yes, he started to shuffle again, placing three cards in front of me.`,
+  onSelected: () => {
+    tarotReading();
+    var felix = getCharacter('man');
+    if (!topicsCarpetUnlocked){
+      felix.topics.push(felixTopicsCarpet);
+      topicsCarpetUnlocked = true;
+    }
+
+  }
+}
+
+var felixTopicsCarpet = 
+{
+  option: `Ask about the **CARPET**`,
+  line: `You feel as if you've done everything right, and yet, the man has once again grown cold and refuses to talk to you. You might be able to try again in a few weeks.
+  ==============
+  END OF DEMO :)
+  ==============`
+}
+
 var drinkMenu = `
 +------------------------------------+
 |‎‎‎‎‎‎‎‎‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎|  
@@ -48,7 +93,13 @@ function pickCard() {
 }
 
 const tarotReading = () => {
-  pickCard("test");
+  for (let i = 0; i < 3; i++){
+    pickCard();
+  }
+  println(`“Well, that about does it, you really are who you say you are, DETECTIVE.”
+  “I haven’t even introduced myself to you, yet.”
+  “Where are my manners, DETECTIVE? He stretched an old, wrinkly red hand, to which i cautiously took,
+  shaking firm. “Name’s Felix. Felix Natalis.”`);
 }
 const gameDisk = () => ({
   roomId: 'outside',
@@ -61,7 +112,7 @@ const gameDisk = () => ({
       =======`,
       desc: `‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ They say if you don’t deal with one’s own demons, they will deal with you. It's funny how one can get help from sources they least expect. To make any sense of it, I’d have to go back three years. To the beginning of the pain.
       ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ 
-      ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ Back then, I was still in the force, GlipGlorpPD,  Au Gratin Island, Pangratto, Effin’-Ham. “When ya gonna work for me, detective?” I scoffed at the idea, shaking my head with a smile. “You’d make me work undercover at some hotel, filling out invoices. That’d be dangerous for my health. Besides, I’m getting carpet installed today, just for my birthday. That comes first.” I took one long drag from the last of a comforting pack of cigarettes. “See, last one today. It's bad for the carpet.” 
+      ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ Back then, I was still in the force, GlipGlorpPD,  Au Gratin Island, Pangratto, Effin’-Ham. “When ya gonna work for me, detective?” I scoffed at the idea, shaking my head at my boss, with a smile. “You’d make me work undercover at some hotel, filling out invoices. That’d be dangerous for my health. Besides, I’m getting carpet installed today, just for my birthday. That comes first.” I took one long drag from the last of a comforting pack of cigarettes. “See, last one today. It's bad for the carpet.” 
       ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ My boss had a hard time stifling his office-level laughter. “That’s you, a regular boy scout. Happy birthday, by the way, Detective. Still on for a game of backgammon this Tuesday? Maybe parcheesi?” My eyes furrowed at the thought of another high stakes game of Stratego. “Like falling off a log.”
 
       ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎‏‏‎ Life was good. It wasn’t everyday that an overworked detective got the feeling of a new carpet between his toes. The sun setting on a sweet summer’s day, that familiar chemical smell of upholstery fresh from the factory, the sounds of cars without mufflers destroying my ear drums - a carpet, white and pristine as the sands of the moon. The American Dream, come true. My hands trembled in front of my own door. “I can’t believe this is really happening.” 
@@ -97,12 +148,12 @@ You can see some SIGNS, and the DOOR.
       `,
     },
     {
-      name: ['car', 'my car'],
-      desc: `Just my daily drive ,a Big Ugly Indestructible Cat Killer. I don’t think I left anything important there. Maybe my keys? Who knows.`,
-    },
-    {
       name: ['door', 'bar door'],
       desc: `Apart from the torn fliers that line the walls of the door, it was one of the doors of all time.`,
+    },
+    {
+      name: ['car'],
+      desc: `Just my daily drive, a Big Ugly Indestructible Cat Killer. I don’t think I left anything important there. Maybe my keys? Who knows.`,
     },
   ],
 
@@ -134,7 +185,42 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
 
     items: [
       {
-
+        name: ['cards', 'card', 'deck'],
+        desc: `A standard Rider-Waite tarot deck sat on the bar in front of the man.`,
+        onUse: () => {
+          var felix = getCharacter('man')
+          println(`That's not mine`);
+          if (!topicsTarotUnlocked){
+            felix.topics.push(felixTopicsTarot);
+            topicsTarotUnlocked = true;
+          }
+        },
+        onLook: () =>{
+          var felix = getCharacter('man')
+          if (!topicsTarotUnlocked){
+            var felix = getCharacter('man')
+            felix.topics.push(felixTopicsTarot);
+            topicsTarotUnlocked = true;
+          }
+        }
+      },
+      {
+        name: ['menu', 'bar menu'],
+        desc: `It's the menu for the bar.`,
+        onLook: () => {
+          if (getItemInInventory('menu')){
+            println(`A cheap plastic cover laminated the paper menu from my dirty, law giving hands. It was a drink
+            menu, listed with all the staples one might expect, white wine, red wine, fritzy spitzy ditzy do-hahs,
+            glimby-jimbly-aperolizy-spritza-honey-smackers. Man I really don’t get these british names for stuff. Let’s
+            just look at the cocktails.`);
+          }
+        },
+        onUse: () => {
+          if (getItemInInventory('menu')){
+            println(`===========================` + drinkMenu);
+          }
+        },
+        isTakeable: true,
       }
     ],
 
@@ -146,31 +232,7 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
         dir: ['bar', 'the bar', 'north'], id: 'bar'
       },
     ]
-  },
-
-  {
-    id: 'bar',
-    name: `
-    =======
-    THE BAR
-    =======`,
-
-    onEnter: () => {
-      isOutside = false;
-    },
-
-    items: [
-      {
-
-      }
-    ],
-
-    exits: [
-      {
-        dir: ['back', 'bar name', 'south'], id: 'inside-bar'
-      }
-    ]
-  }],
+  },],
 
   inventory: [
     {
@@ -189,7 +251,7 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
           println('Can only be used OUTSIDE');
         }
         cigarettesSmoked++;
-        var lighter = getItem('Icarus™ Pre-Paid Lighter');
+        var lighter = getItem('Ickarus™ Pre-Paid Lighter');
         var cigs = getItem('Cigarettes');
         lighter.desc = "A pre-paid lighter without any seconds left.";
         cigs.desc = "A pack of death sticks, nestled together. My lighter isn't workin' anymore, so they're pretty useless. Who cares anyway? These things'll kill ya.";
@@ -206,7 +268,7 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
     },
 
     {
-      name: [`Icarus™ Pre-Paid Lighter`, 'Icarus', 'Lighter', 'Prepaid lighter'],
+      name: [`Ickarus™ Pre-Paid Lighter`, 'Ickarus', 'Lighter', 'Prepaid lighter'],
       desc: ` My handy dandy, pocket lighter. With everything getting so convenient now-a-days, I can just pay for my lighter at any gas station to get it activated. I was so excited to get here today, I forgot to pick up some more seconds. Only a couple left.`,
       onUse: () => {
         println(`Lighter? I hardly know 'er!`);
@@ -217,8 +279,30 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
   characters: [
     {
       name: 'man',
-      desc: 'test',
       roomId: 'inside-bar',
+      desc: `A hulking visage of a man sat lazily at the counter in front of me. His face was obscured in
+      shadow, his clothes illuminated by the radiant orange glow from the bar. He was hunched over the bar,
+      wearing a cream-coloured daysuit, idly sipping away at the drinks. A comfortable line of empty glasses lay
+      to his right, he’s been here a while. This must be my guy.`,
+      topics: [
+      ],
+      onTalk: () => {
+        if (cigarettesSmoked === 0){
+          println(`The world felt like it was folding in on itself, my stomach flipped while my head did flops. This
+          man might finally have the answers to what happened that fateful afternoon, and the feelings were
+          completely getting to me. I also forgot to eat this morning. I’m feeling too anxious right now. I better step
+          outside for a break.`)
+        }
+        else {
+          var felix = getCharacter('man');
+          if (!topicsBadgeUnlocked){
+            felix.topics.push(felixTopicsBadge);
+            topicsBadgeUnlocked = true;
+          }
+
+        }
+
+      },
     },
   ],
   
