@@ -32,7 +32,7 @@ var felixTopicsTarot =
   onSelected: () => {
     tarotReading();
     var felix = getCharacter('man');
-    if (!topicsCarpetUnlocked){
+    if (!topicsCarpetUnlocked && cigarettesSmoked){
       felix.topics.push(felixTopicsCarpet);
       topicsCarpetUnlocked = true;
     }
@@ -43,10 +43,43 @@ var felixTopicsTarot =
 var felixTopicsCarpet = 
 {
   option: `Ask about the **CARPET**`,
-  line: `You feel as if you've done everything right, and yet, the man has once again grown cold and refuses to talk to you. You might be able to try again in a few weeks.
-  ==============
-  END OF DEMO :)
-  ==============`
+  line: `This was the moment. My fingers curled into fists, as those faithful words left my mouth. "Felix, what do you know about carpet vandalism?" 
+  He failed to meet my eyes, staring into the well of his mostly empty drink. "Carpet vandalism?" He replied, before beginning to laugh, 
+  producing a simple wooden pipe from his suitjacket. He banged the tobacco that lay within the pipe, pinching a new batch inside, squishing 
+  his thumb to pack in the poison. "I should be asking **you** that question, DETECTIVE."
+
+  I was stunned, to say the least. "Me? I investigate it, I don't participate in it." He man laughed again as a bright red tail began to curl out of his suit jacket,
+  standing and towering above, pointing a single finger in my face, producing the pipe to his face. "Look within yourself, DETECTIVE. Feel the sins crawling on your soles and face them."
+  I looked down, at my feet. 
+
+  I was there, standing in an infinitely white space of carpet, that stretched as far as the eye could see. Fuzzy little rows of fleece painted a perfect white country side.
+  My feet, my dirty shoes, planted right in the middle, two familiar boot prints I had long forgotten. "Its always been you, DETECTIVE." I knew my crime, but I just wasn't
+  strong enough to face it just yet. 
+
+  I looked back up at him, aware of the truth in my head. I had ruined my own carpet. "Guess it has, Felix. How did you know?"
+
+  The man, no the demon stood to his full, gargantuan height, slapping a pile of bills on the counter. "You tracked mud inside."
+
+  I looked back, a pitter patter of footprints highlighted by the orange glow up above. "Looked like this case solved itself, DETECTIVE. Must be your lucky day."
+
+  "Actually, its my birthday, Felix."
+
+  He turned to face me completely, offering the pipe of tobacco, cartoonishly large for my human face. "Got a light?"
+
+  I laughed awkwardly, remarking that I had just used my last seconds on my lighter, and the damn thing didn't work. "What the hell are you talkin' about, DETECTIVE?
+  Ain't you ever heard of matches?"
+
+  "I have, Felix. I have."
+
+  Well, another day, another crime well solved. Man, I'm good. I didn't even have to go very far to arrest the culprit. "You're coming with me, me." I opened the door to my car,
+  and cuffed myself to the wheel. "You're not going anywhere, haha!" I laughed to myself, leaning back in the seat. At least I got this catharsis. I might never
+  get my carpet back, but I'll always have this, right here, right now. 
+
+  I sat up in my seat, and breathed deep. "Guess there'll be more carpets." I stared down at my wrist, cuffed to the wheel. "Man, am I dumb."
+  `,
+  onSelected: () => {
+    enterRoom('credits');
+  }
 }
 
 var drinkMenu = `
@@ -183,6 +216,16 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
       isOutside = false;
     },
 
+    items: [
+      {
+        name: ['man'],
+        desc: `A hulking visage of a man sat lazily at the counter in front of me. His face was obscured in
+        shadow, his clothes illuminated by the radiant orange glow from the bar. He was hunched over the bar,
+        wearing a cream-coloured daysuit, idly sipping away at the drinks. A comfortable line of empty glasses lay
+        to his right, he’s been here a while. This must be my guy.`
+      }
+    ],
+
     exits: [
       {
         dir: ['outside the bar', 'outside', 'south'], id: 'outside'
@@ -214,19 +257,19 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
 
     items: [
       {
-        name: ['cards', 'card', 'deck'],
+        name: ['cards', 'card', 'deck', 'tarot', 'tarot cards', 'tarot deck'],
         desc: `A standard Rider-Waite tarot deck sat on the bar in front of the man.`,
         onUse: () => {
           var felix = getCharacter('man')
           println(`That's not mine`);
-          if (!topicsTarotUnlocked){
+          if (!topicsTarotUnlocked && cigarettesSmoked){
             felix.topics.push(felixTopicsTarot);
             topicsTarotUnlocked = true;
           }
         },
         onLook: () =>{
           var felix = getCharacter('man')
-          if (!topicsTarotUnlocked){
+          if (!topicsTarotUnlocked && cigarettesSmoked){
             var felix = getCharacter('man')
             felix.topics.push(felixTopicsTarot);
             topicsTarotUnlocked = true;
@@ -265,12 +308,37 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
     I feel like I am likely to be eaten by a grue, for what it’s worth.
     You are standing inside the BATHROOM.
     There is an exit to your WEST.`,
+    onEnter: () => {
+      isOutside = false;
+    },
     exits: [
       {
         dir: 'west', id: 'inside-bar'
       }
     ]
-  }],
+  },
+
+{ 
+  id: 'credits',
+  name: 'credits',
+  desc: `====================================================
+  WRITING: TRISTAN GOUCHERNOUR
+  PROGRAMMING: ARIA
+
+  SPECIAL THANKS TO:
+  Trina, for making us anxious enough to finish the game
+
+  Cassidy, for reminding us of the true meaning of Christmas
+
+  and YOU, for having a birthday.
+
+  **Happy Birthday,
+  Jarod!**
+
+  THE END
+  ====================================================
+  `
+}],
 
   inventory: [
     {
@@ -279,20 +347,20 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
       onUse: () => {
         if (isOutside){
           if (cigarettesSmoked === 0){
-            println('New laws, can’t smoke inside. Man, I miss the good ol’ days, when you could arrest someone without reading them their rights and get away with it. Smoking outside bites too.” “I took the cigarette and lighter from my jacket, the lighter of course, with only one more pre-paid charge left, would only be good for one last stick-o-death. Either way, I leaned my head up and took one long drag, staring up at the sky with a small sigh. I felt myself calming down as the anxiety from my vices slipped from my body. I flicked the cigarette down, stomping it into the pavement.')
+            println('I took the cigarette and lighter from my jacket, the lighter of course, with only one more pre-paid charge left, would only be good for one last stick-o-death. Either way, I leaned my head up and took one long drag, staring up at the sky with a small sigh. I felt myself calming down as the anxiety from my vices slipped from my body. I flicked the cigarette down, stomping it into the pavement.')
+            cigarettesSmoked++;
+            var lighter = getItem('Ickarus™ Pre-Paid Lighter');
+            var cigs = getItem('Cigarettes');
+            lighter.desc = "A pre-paid lighter without any seconds left.";
+            cigs.desc = "A pack of death sticks, nestled together. My lighter isn't workin' anymore, so they're pretty useless. Who cares anyway? These things'll kill ya.";
           }
           else if (cigarettesSmoked > 0){
             println(` I thumbed another cigarette into my hands. Damn, if only I had remembered to grab more seconds from the gas station on the way over here, I could authorize the lighter back on. Its funny how the future can fix so many things that weren't problems.`)
           }
         }
         else{
-          println('Can only be used OUTSIDE');
+          println('New laws, can’t smoke inside. Man, I miss the good ol’ days, when you could arrest someone without reading them their rights and get away with it. Smoking outside bites too.');
         }
-        cigarettesSmoked++;
-        var lighter = getItem('Ickarus™ Pre-Paid Lighter');
-        var cigs = getItem('Cigarettes');
-        lighter.desc = "A pre-paid lighter without any seconds left.";
-        cigs.desc = "A pack of death sticks, nestled together. My lighter isn't workin' anymore, so they're pretty useless. Who cares anyway? These things'll kill ya.";
       }
     },
     
@@ -318,10 +386,9 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
     {
       name: 'man',
       roomId: 'bar',
-      desc: `A hulking visage of a man sat lazily at the counter in front of me. His face was obscured in
-      shadow, his clothes illuminated by the radiant orange glow from the bar. He was hunched over the bar,
-      wearing a cream-coloured daysuit, idly sipping away at the drinks. A comfortable line of empty glasses lay
-      to his right, he’s been here a while. This must be my guy.`,
+      desc: `This guy was huge, and could drink to match his size. He sat with an array of empty glasses
+      around him. A deck of CARDS lay next to his left hand, which was resting on the bar with the rest of his
+      massive torso. His skin was bright red, and her nails were sharp, long, and black.`,
       topics: [
       ],
       onTalk: () => {
@@ -333,7 +400,7 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
         }
         else {
           var felix = getCharacter('man');
-          if (!topicsBadgeUnlocked){
+          if (!topicsBadgeUnlocked && cigarettesSmoked){
             felix.topics.push(felixTopicsBadge);
             topicsBadgeUnlocked = true;
           }
