@@ -241,6 +241,10 @@ You can see a MAN sitting at the BAR to your NORTH, as well as some BATHROOMS to
 
   {
     id: 'bar',
+    name: `
+    =========
+    BAR
+    =========`,
     desc: `I approached the bar, gathering a closer look at the single patron. This guy was huge, and could
     drink to match his size. He sat with an array of empty glasses around him. A deck of CARDS lay next to his
     left hand, which was resting on the bar with the rest of his massive torso. His skin was bright red, and her
